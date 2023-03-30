@@ -1,0 +1,20 @@
+{
+  "expo": {
+    "name": "Monk Mode",
+    "slug": "monkmode-app",
+    "version": "1.0.0",
+    "orientation": "portrait",    
+    "userInterfaceStyle": "automatic",    
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": false
+    },
+    "android": { },
+    "web": { }
+  }
+}
