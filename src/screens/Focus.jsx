@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, Platform, StatusBar, Dimensions, BackHandler, Pressable } from 'react-native';
+import { View, Text, SafeAreaView, Platform, StatusBar, Dimensions, Pressable } from 'react-native';
 
 import BlueButton from '../components/buttons/BlueButton';
 

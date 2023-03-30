@@ -1,10 +1,9 @@
-import { View, SafeAreaView, Platform, StatusBar, ScrollView, Alert, BackHandler, Text } from 'react-native';
+import { View, SafeAreaView, Platform, ScrollView, Alert, BackHandler } from 'react-native';
 
 import HeaderCard from '../components/cards/header/HeaderCard';
 import TaskCard from '../components/cards/focus/TaskCard';
 import DiaryCard from '../components/cards/diary/DiaryCard';
 import PlanningCard from '../components/cards/planning/PlanningCard';
-import BlueButton from '../components/buttons/BlueButton';
 
 import { useEffect, useState } from 'react';
 import * as Notifications from 'expo-notifications';
@@ -13,11 +12,8 @@ import { useNavigation } from '@react-navigation/native';
 import BackButtonHandler from '../scripts/assistive/BackButtonHandler';
 import PeriodManager from '../scripts/managers/PeriodManager';
 import NonNegotiablesManager from '../scripts/managers/NonNegotiablesManager';
-import PlanningManager from '../scripts/managers/PlanningManager';
-import DiaryManager from '../scripts/managers/DiaryManager';
 
-function Main(props) {
-    const [blueButtonState, setBlueButtonState] = useState(1); // 0 - Plan the day, 1 - Start task, 2 - Open diary
+function Main(props) {    
     const navigation = useNavigation();        
     
     //#region Rerender when the screen becomes active    
@@ -57,9 +53,11 @@ function Main(props) {
         } 
     }, [])        
 
+//style={{paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0}}
+
     return (
-        <View className="w-full bg-backgroundEssential dark:bg-backgroundEssentialDRK">
-            <SafeAreaView className="w-[95%] h-full flex content-center mx-auto" style={{paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0}}>                                
+        <View className="w-full h-screen bg-backgroundEssential dark:bg-backgroundEssentialDRK">
+            <SafeAreaView className="w-[95%] h-full flex content-center mx-auto" >                                
             <View style={{overflow: 'hidden', borderTopLeftRadius: 16, borderTopRightRadius: 16, borderBottomLeftRadius: 16, borderBottomRightRadius: 16}}>
                 <ScrollView className="w-full h-screen" showsVerticalScrollIndicator={false}>
                         <HeaderCard style="mt-2"/>

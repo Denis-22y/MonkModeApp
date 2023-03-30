@@ -1,10 +1,10 @@
 {
   "expo": {
     "name": "Monk Mode",
-    "slug": "monkmode-app",
+    "slug": "monk-mode-app",
     "version": "1.0.0",
-    "orientation": "portrait",    
-    "userInterfaceStyle": "automatic",    
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
     "updates": {
       "fallbackToCacheTimeout": 0
     },
@@ -14,7 +14,15 @@
     "ios": {
       "supportsTablet": false
     },
-    "android": { },
-    "web": { }
+    "android": {
+      "package": "com.denis23y.monkmodeapp"
+    },
+    "web": {},
+    "extra": {
+      "eas": {
+        "projectId": "8afac92e-7e6f-4284-964b-49be2f7689a6"
+      }
+    },
+    "owner": "denis-23y"
   }
 }

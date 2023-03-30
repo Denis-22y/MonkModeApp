@@ -107,10 +107,10 @@ class SetupPeriodStore {
 
         FileSystem.writeAsStringAsync(FileSystem.documentDirectory+'PeriodPreferences.json', JSON.stringify(this.preferences));
 
-        FileSystem.writeAsStringAsync(FileSystem.documentDirectory+'DiaryData.json', '');
+        FileSystem.writeAsStringAsync(FileSystem.documentDirectory+'DiaryData.json', '[]');
         DiaryManager.setDaysList([]);        
 
-        FileSystem.writeAsStringAsync(FileSystem.documentDirectory+'PlanningData.json', '');
+        FileSystem.writeAsStringAsync(FileSystem.documentDirectory+'PlanningData.json', '[]');
         PlanningManager.setTasks([]);
     }
 }

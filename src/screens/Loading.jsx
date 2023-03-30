@@ -28,9 +28,9 @@ function Loading(props) {
         let timeoutId;
 
         navigation.addListener('focus', () => {
-                timeoutId = setTimeout(() => {
-                setShowWarning(true);
-            }, 15000);
+            timeoutId = setTimeout(() => {
+            setShowWarning(true);
+        }, 15000);
 
             FileSystem.readAsStringAsync(FileSystem.documentDirectory + 'PlanningData.json')
                 .then(contentStr => {            
