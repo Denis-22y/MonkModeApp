@@ -65,7 +65,7 @@ class DiaryManager{
 
     saveDaysList(){
         FileSystem.writeAsStringAsync(FileSystem.documentDirectory + 'DiaryData.json', JSON.stringify(this.daysList))
-        .catch(err => console.log('Error with saving the DiaryData.json - oficial error: ' + err));
+            .catch(err => console.log('Error with saving the DiaryData.json - oficial error: ' + err));
     }
 
 }

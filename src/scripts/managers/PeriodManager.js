@@ -5,17 +5,11 @@ class PeriodManager{
         isValid: false,
         goal: 'goal',
         endTime: 1,
-        startTime: 0,
-        nonNegotiables: [
-            'name',
-            'name2',
-            'name3'
-        ]
+        startTime: 0
     }
 
     setPeriodPreferences(value){
-        this.periodPreferences = value;
-        NonNegotiablesManager.setNonNegotiables(this.nonNegotiables);
+        this.periodPreferences = value;        
     }
 
     get isValid(){
@@ -24,7 +18,7 @@ class PeriodManager{
 
     get goal(){
         return this.periodPreferences.goal;
-    }
+    } 
 
     get endTime(){
         return this.periodPreferences.endTime;
@@ -33,10 +27,6 @@ class PeriodManager{
     get startTime(){
         return this.periodPreferences.startTime;
     }
-
-    get nonNegotiables(){
-        return this.periodPreferences.nonNegotiables;
-    }    
 
     get remainingDaysString(){        
         const differenceInMillisecnods = this.endTime - new Date().getTime();

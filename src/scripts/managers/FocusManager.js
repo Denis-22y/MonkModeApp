@@ -1,5 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import NotificationsPlanner from "../assistive/NotificationsPlanner";
+import { StatusBar } from "react-native";
 
 class FocusManager{
     constructor() {
@@ -45,12 +46,14 @@ class FocusManager{
         this.taskTitle = title;
         this.focusDuration = focusDuration;
         this.relaxDuration = relaxDuration;
-        this.setState(stateId);
+        this.setState(stateId);        
 
         this.startIterations();
     }
 
     shutdown(){
+        StatusBar.setHidden(false, 'fade');
+        NotificationsPlanner.canselStateNotifications();
         this.stopIterations();
     }
 //#endregion
@@ -108,12 +111,16 @@ class FocusManager{
     updateState(){
         switch(this.stateId){
             case 1:                
+                StatusBar.setHidden(true, 'slide');
+
                 if(this.state.endTime <= new Date().getTime()) {
                     this.startRelax();                
                 }
             
                 break;
             case 2:
+                StatusBar.setHidden(false, 'slide');
+
                 if(this.state.endTime <= new Date().getTime()) {
                     this.startStay();                
                 }

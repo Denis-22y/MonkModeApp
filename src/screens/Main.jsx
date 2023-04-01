@@ -1,4 +1,4 @@
-import { View, SafeAreaView, Platform, ScrollView, Alert, BackHandler } from 'react-native';
+import { View, SafeAreaView, Platform, ScrollView, Alert, BackHandler, StatusBar } from 'react-native';
 
 import HeaderCard from '../components/cards/header/HeaderCard';
 import TaskCard from '../components/cards/focus/TaskCard';
@@ -15,7 +15,7 @@ import NonNegotiablesManager from '../scripts/managers/NonNegotiablesManager';
 
 function Main(props) {    
     const navigation = useNavigation();        
-    
+
     //#region Rerender when the screen becomes active    
         const useForceRerendering = () => {
             const [counter, setCounter] = useState(0);
@@ -39,7 +39,7 @@ function Main(props) {
         }
     }, []);   
 
-    useEffect(() => {            
+    useEffect(() => {    
         Notifications.getPermissionsAsync().then(notificationPermissionsStatus => { // Notifications permisson request
             if(notificationPermissionsStatus.granted === false){
                 Notifications.requestPermissionsAsync();
@@ -53,11 +53,9 @@ function Main(props) {
         } 
     }, [])        
 
-//style={{paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0}}
-
     return (
         <View className="w-full h-screen bg-backgroundEssential dark:bg-backgroundEssentialDRK">
-            <SafeAreaView className="w-[95%] h-full flex content-center mx-auto" >                                
+            <SafeAreaView className="w-[95%] h-full flex content-center mx-auto" style={{paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0}}>                                
             <View style={{overflow: 'hidden', borderTopLeftRadius: 16, borderTopRightRadius: 16, borderBottomLeftRadius: 16, borderBottomRightRadius: 16}}>
                 <ScrollView className="w-full h-screen" showsVerticalScrollIndicator={false}>
                         <HeaderCard style="mt-2"/>

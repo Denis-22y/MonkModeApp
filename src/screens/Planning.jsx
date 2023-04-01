@@ -63,9 +63,9 @@ const Planning = observer(({ route }) => {
     function handleFinishButton(){    
         navigation.goBack();
     }
-//style={{ minHeight: Math.round(windowHeight) }}
+
     return (
-        <View className="w-full bg-background dark:bg-backgroundEssentialDRK" >
+        <View className="w-full bg-background dark:bg-backgroundEssentialDRK" style={{ minHeight: Math.round(windowHeight) }}>
             <Pressable onPress={Keyboard.dismiss} accessible={false}>
                 <SafeAreaView className="w-[93%] h-full flex content-center mx-auto justify-start" style={{ paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight + 7 : 0, paddingBottom: Platform.OS === 'android' ? Dimensions.get('screen').height - Dimensions.get('window').height + StatusBar.currentHeight : 0 }}>                    
                     <Pressable className="ml-auto mt-2 w-1/6" hitSlop={25} onPress={handleFinishButton}>

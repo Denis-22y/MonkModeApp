@@ -9,6 +9,7 @@ import PlanningManager from '../scripts/managers/PlanningManager';
 import { observer } from 'mobx-react-lite';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import BackButtonHandler from '../scripts/assistive/BackButtonHandler';
+import NotificationsPlanner from '../scripts/assistive/NotificationsPlanner';
 
 const TEXT_DURATION = 400;
 
@@ -21,8 +22,8 @@ const Focus = observer(( {route} ) => {
 
     useEffect(() => { // First render                        
         FocusManager.startup(taskData.name, taskData.focusDuration);     
-
-        navigation.addListener('beforeRemove', () => { // Subcription on removing the screen            
+        
+        navigation.addListener('beforeRemove', () => { // Subcription on removing the screen                        
             FocusManager.shutdown();
         });
 
@@ -110,11 +111,11 @@ const Focus = observer(( {route} ) => {
         }
     }
 
-    function handleBackButton(){            
+    function handleBackButton(){               
         navigation.goBack();
     }        
     
-    function handleFinishButton(){
+    function handleFinishButton(){        
         PlanningManager.deleteTask(taskData.id);
         navigation.goBack();
     }        

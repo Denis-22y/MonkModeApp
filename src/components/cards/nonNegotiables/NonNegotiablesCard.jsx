@@ -27,12 +27,13 @@ function NonNegotiablesCard( {style} ) {
             <Text className="text-3xl font-semibold text-center text-headerText dark:text-headerTextDRK">Non-negotiables</Text>            
             <Divider style="mt-1.5"/>   
             
-            <View className="mt-3 mb-1">                
+            <View className="mt-3 mb-1">                                
                 {
-                    NonNegotiablesManager.activeNonNegotiables.map(object => {
-                        return <NonNegotiableText parentOnPressActions={handleTextClick} name={object.name} key={object.name}/>
-                    })
+                    NonNegotiablesManager.activeNonNegotiables.map(object => 
+                        <NonNegotiableText parentOnPressActions={handleTextClick} name={object.name} key={object.name}/>
+                    )
                 }
+
                 {
                     NonNegotiablesManager.completedNonNegotiables.map(object => {
                         return <NonNegotiableText parentOnPressActions={handleTextClick} name={object.name} isCompleted={true} key={object.name}/>

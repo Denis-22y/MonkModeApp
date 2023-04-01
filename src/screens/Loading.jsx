@@ -1,4 +1,4 @@
-import { Alert, BackHandler, Platform, View } from 'react-native';
+import { Alert, Appearance, BackHandler, Platform, StatusBar, View } from 'react-native';
 
 import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -9,6 +9,7 @@ import BackButtonHandler from '../scripts/assistive/BackButtonHandler';
 import PeriodManager from '../scripts/managers/PeriodManager';
 import PlanningManager from '../scripts/managers/PlanningManager';
 import DiaryManager from '../scripts/managers/DiaryManager';
+import NonNegotiablesManager from '../scripts/managers/NonNegotiablesManager';
 
 function Loading(props) {
     const navigation = useNavigation();   
@@ -25,24 +26,49 @@ function Loading(props) {
     }, []);      
 
     useEffect(() => {
+        Appearance.addChangeListener(() => {
+            if(Appearance.getColorScheme() === 'dark')
+                StatusBar.setBarStyle('light-content');
+            else
+                StatusBar.setBarStyle('dark-content');
+        });
+
         let timeoutId;
 
         navigation.addListener('focus', () => {
+
             timeoutId = setTimeout(() => {
-            setShowWarning(true);
-        }, 15000);
+                setShowWarning(true);
+            }, 15000);
 
             FileSystem.readAsStringAsync(FileSystem.documentDirectory + 'PlanningData.json')
-                .then(contentStr => {            
-                    PlanningManager.setTasks(JSON.parse(contentStr));            
+                .then(contentStr => {    
+                    if(contentStr === '')        
+                        PlanningManager.setTasks([]);            
+                    else
+                        PlanningManager.setTasks(JSON.parse(contentStr));            
                 }, 
                 err => {
                     console.log(Platform.OS + ' - An error occurated with the PlanningData.json: ' + err);            
                 })
             .then(
+                FileSystem.readAsStringAsync(FileSystem.documentDirectory + 'NonNegotiablesData.json')
+                .then(contentStr => {    
+                    if(contentStr === '')        
+                        NonNegotiablesManager.setNonNegotiables([]);                        
+                    else
+                        NonNegotiablesManager.setNonNegotiables(JSON.parse(contentStr));                        
+                }, 
+                err => {
+                    console.log(Platform.OS + ' - An error occurated with the NonNegotiablesData.json: ' + err);            
+                }))
+            .then(
                 FileSystem.readAsStringAsync(FileSystem.documentDirectory + 'DiaryData.json')
                 .then(contentStr => {            
-                    DiaryManager.setDaysList(JSON.parse(contentStr));                        
+                    if(contentStr === '')
+                        DiaryManager.setDaysList([]);                        
+                    else
+                        DiaryManager.setDaysList(JSON.parse(contentStr));                        
                 }, 
                 err => {
                     console.log(Platform.OS + ' - An error occurated with the DiaryData.json: ' + err);            
@@ -86,8 +112,3 @@ function Loading(props) {
 }
 
 export default Loading;
-
-/*
-TODO:
-    1. Check if the Period is over    
-*/

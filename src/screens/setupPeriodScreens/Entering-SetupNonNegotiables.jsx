@@ -42,8 +42,8 @@ const EnteringSetupNonNegotiables = observer((props) => {
                         <ScrollView className="h-64 mt-3 rounded-3xl" showsVerticalScrollIndicator={false}>
                             <View className="flex flex-row flex-wrap w-full h-80">
                                 {
-                                    SetupPeriodStore.preferences.nonNegotiables.map(name => 
-                                        <NonNegotiableView name={name} key={name}/>
+                                    SetupPeriodStore.nonNegotiables.map(object => 
+                                        <NonNegotiableView name={object.name} key={object.name}/>
                                     )
                                 }
 

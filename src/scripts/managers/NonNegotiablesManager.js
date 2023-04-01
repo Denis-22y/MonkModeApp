@@ -1,21 +1,12 @@
-class NonNegotiablesManagers{    
-    nonNegotiables = [{name: 'name', isCompleted: false}, {name: 'name2', isCompleted: false}];
+import * as FileSystem from 'expo-file-system';
 
-    setNonNegotiables(names){
-        this.nonNegotiables = this.createNonNegotiableObjects(names);
-    }
+class NonNegotiablesManagers {    
+    nonNegotiables = [];
 
-    createNonNegotiableObjects(names){
-        let output = [];
+    todayDate = new Date().getDate();                    
 
-        names.map(name => {
-            output.push({
-                name: name,
-                isCompleted: false
-            });
-        });
-
-        return output;
+    setNonNegotiables(list){
+        this.nonNegotiables = list;
     }
 
     get haveNonNegotiables(){
@@ -26,17 +17,27 @@ class NonNegotiablesManagers{
     }
 
     get activeNonNegotiables(){        
-        return this.nonNegotiables.filter(object => object.isCompleted === false);
+        return this.nonNegotiables.filter(object => object.dateCompleted !== this.todayDate);
     }
 
     get completedNonNegotiables(){
-        return this.nonNegotiables.filter(object => object.isCompleted === true);
+        return this.nonNegotiables.filter(object => object.dateCompleted === this.todayDate);
     }
 
     switchNonNegotiable(name){
-        const id = this.nonNegotiables.findIndex(object => object.name === name);
+        const id = this.nonNegotiables.findIndex(object => object.name === name);        
 
-        this.nonNegotiables[id].isCompleted = !this.nonNegotiables[id].isCompleted;
+        if(this.nonNegotiables[id].dateCompleted === this.todayDate)
+            this.nonNegotiables[id].dateCompleted = null;
+        else 
+            this.nonNegotiables[id].dateCompleted = this.todayDate;
+                
+        this.saveNonNegotiables();
+    }
+
+    saveNonNegotiables(){
+        FileSystem.writeAsStringAsync(FileSystem.documentDirectory + 'NonNegotiablesData.json', JSON.stringify(this.nonNegotiables))
+            .catch(err => console.log('Error with saving the NonNegotiablesData.json - oficial error: ' + err));
     }
 }
 

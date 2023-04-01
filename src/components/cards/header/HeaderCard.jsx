@@ -7,8 +7,7 @@ import PeriodManager from '../../../scripts/managers/PeriodManager';
 import { useNavigation } from "@react-navigation/native";
 
 function HeaderCard( {style} ) {     
-    const navigation = useNavigation();
-
+    const navigation = useNavigation();    
 
     function handleCreateNewPeriodButton(){
         Alert.alert(`Are you sure?`, 'Do you want to create a new Monk Mode period?', [{text: 'Cancel', style: 'cancel'}, {text: 'Create', onPress: () => navigation.navigate('Entering-Description')}]); 
