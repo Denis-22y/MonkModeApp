@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, Platform, StatusBar, Dimensions, Pressable, Keyboard, useWindowDimensions, ScrollView } from 'react-native';
+import { View, Text, SafeAreaView, Platform, StatusBar, Dimensions, Pressable, Keyboard, useWindowDimensions, ScrollView, KeyboardAvoidingView } from 'react-native';
 
 import BlueButton from '../components/buttons/BlueButton';
 import Divider from '../components/cards/card/Divider';
@@ -13,6 +13,7 @@ import { observer } from 'mobx-react-lite';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import InputTimeField from '../components/cards/planning/InputTimeField';
 import InputDurationField from '../components/cards/planning/InputDurationField';
+import ExpoStatusBar from 'expo-status-bar/build/ExpoStatusBar';
 
 const Planning = observer(({ route }) => {
     const navigation = useNavigation();
@@ -23,7 +24,10 @@ const Planning = observer(({ route }) => {
     useEffect(() => {
         PlanningManager.setIsTomorrow(isTommorow);
 
-        navigation.addListener('blur', () => PlanningManager.saveTasksList())
+        navigation.addListener('blur', () => {
+            PlanningManager.saveTasksList();
+            PlanningManager.resetTempValues();
+        });
     }, []);
 
     useEffect(() => { //Subscribe on ABB               
@@ -35,6 +39,30 @@ const Planning = observer(({ route }) => {
 
         navigation.addListener('blur', BackButtonHandler.removeAndroidBackButtonHandler);
     }, []);
+
+    function getDateString(){
+        const date = new Date(new Date().getTime() + (isTommorow === true ? 86400000 : 0));
+
+        const day = date.getDate();
+        let month = 'Unknown month';
+
+        switch(date.getMonth()){
+            case 0: month = 'January'; break;
+            case 1: month = 'February'; break;
+            case 2: month = 'March'; break;
+            case 3: month = 'April'; break;
+            case 4: month = 'May'; break;
+            case 5: month = 'June'; break;
+            case 6: month = 'July'; break;
+            case 7: month = 'August'; break;
+            case 8: month = 'September'; break;
+            case 9: month = 'October'; break;
+            case 10: month = 'November'; break;
+            case 11: month = 'December'; break;
+        }
+
+        return `${day} ${month}`
+    }  
 
     function handleNameCommit(text) {
         PlanningManager.setName(text);
@@ -66,23 +94,22 @@ const Planning = observer(({ route }) => {
 
     return (
         <View className="w-full bg-background dark:bg-backgroundEssentialDRK" style={{ minHeight: Math.round(windowHeight) }}>
+            <ExpoStatusBar style='auto' translucent/>
             <Pressable onPress={Keyboard.dismiss} accessible={false}>
                 <SafeAreaView className="w-[93%] h-full flex content-center mx-auto justify-start" style={{ paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight + 7 : 0, paddingBottom: Platform.OS === 'android' ? Dimensions.get('screen').height - Dimensions.get('window').height + StatusBar.currentHeight : 0 }}>                    
-                    <Pressable className="ml-auto mt-2 w-1/6" hitSlop={25} onPress={handleFinishButton}>
+                    <Pressable className="ml-auto md:mt-2 w-1/6" hitSlop={25} onPress={handleFinishButton}>
                         <Text className="ml-auto text-right text-xl font-medium text-grayTextButton dark:text-grayTextButtonDRK">Finish</Text>                                    
                     </Pressable> 
 
                     {/* Header */}
-                    <View className="">
-                        <Text className="text-4xl font-semibold text-center text-headerText dark:text-headerTextDRK">Planning</Text>
-                    </View>
+                    <Text className="text-4xl font-semibold text-center text-headerText dark:text-headerTextDRK">{getDateString()}</Text>
+
 
                     {/* Tasks */}
-                    <ScrollView className="mt-7 rounded-xl">
-
+                    <ScrollView className="mt-4 md:mt-7 rounded-xl">
                         {
                             (isTommorow === true && PlanningManager.tasksForTomorrow.length <= 0) || (isTommorow === false && PlanningManager.tasksForToday.length <= 0)
-                                ? <Pressable className="m-auto" onPress={handleAddButton} hitSlop={30} key={3147}>
+                                ? <Pressable className="m-auto mt-3" onPress={handleAddButton} hitSlop={30} key={3147}>
                                     <Animated.Text className="text-center text-grayTextButton dark:text-grayTextButtonDRK text-xl" entering={FadeIn} exiting={FadeOut}>Tap to add a task</Animated.Text>
                                 </Pressable>
                                 : <></>
@@ -97,24 +124,26 @@ const Planning = observer(({ route }) => {
                                     return <TaskIsland data={data} key={data.id} />
                                 })
                         }
-
                         <View className="h-32"/>
                     </ScrollView>
 
-                    <Divider style="mt-4" />
+                    <Divider style="mt-2 sm:mt-3" />
 
                     {/* Fields */}
-                    <View className="mb-36">
-                        <InputField style="mt-5" placeholder="Name..." value={PlanningManager.name} onChange={handleNameCommit} />
-                        <InputField style="mt-4" placeholder="Details..." value={PlanningManager.details} onChange={handleDetailsCommit} />
+                    <View className="mb-16 sm:mb-24 md:mb-40">
+                        <KeyboardAvoidingView keyboardVerticalOffset={15} behavior='position'>
+                            <InputField style="mt-3 sm:mt-5" placeholder="Name..." value={PlanningManager.name} onChange={handleNameCommit} />
+                            <InputField style="mt-4" placeholder="Details..." value={PlanningManager.details} onChange={handleDetailsCommit} />
+                        </KeyboardAvoidingView>
+
                         <InputTimeField style="mt-6" onCommit={handleTimeCommit}/>
                         <InputDurationField style="mt-4" onCommit={handleDurationCommit}/>
 
-                        <Pressable className="mt-5" hitSlop={5} onPress={handleDeleteButton}>
+                        <Pressable className="mt-3 sm:mt-5" hitSlop={5} onPress={handleDeleteButton}>
                             <Text className="text-lg text-headerDescr dark:text-headerDescrDRK font-medium text-center">Delete the task</Text>
                         </Pressable>
                     </View>
-
+                    
                     <BlueButton text='Add task' onPress={handleAddButton} />                     
                 </SafeAreaView>
             </Pressable>

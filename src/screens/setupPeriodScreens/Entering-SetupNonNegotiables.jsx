@@ -39,8 +39,8 @@ const EnteringSetupNonNegotiables = observer((props) => {
                         </View>
                         
                         {/* Non-negotiables*/}
-                        <ScrollView className="h-64 mt-3 rounded-3xl" showsVerticalScrollIndicator={false}>
-                            <View className="flex flex-row flex-wrap w-full h-80">
+                        <ScrollView className="h-48 sm:h-48 md:h-64 mt-3 rounded-3xl" showsVerticalScrollIndicator={false}>
+                            <View className="flex flex-row flex-wrap w-full h-42 sm:h-68 md:h-80">
                                 {
                                     SetupPeriodStore.nonNegotiables.map(object => 
                                         <NonNegotiableView name={object.name} key={object.name}/>
@@ -51,11 +51,11 @@ const EnteringSetupNonNegotiables = observer((props) => {
                                     SetupPeriodStore.getNonNegotiableSuggestion() !== null 
                                     ? <NonNegotiableSuggestionView />
                                     : <></>
-                                }                                
+                                }          
                             </View>
                         </ScrollView>
 
-                        <LargeInput style="mt-10" placeholder='Write it down...' onCommit={text => handleInputCommit(text)} clearOnFocus={true}/>
+                        <LargeInput style="mt-4 md:mt-10" placeholder='Write it down...' onCommit={text => handleInputCommit(text)} clearOnFocus={true}/>
                     </KeyboardAvoidingView>
                     
                     {/* Continue button*/}
@@ -65,7 +65,7 @@ const EnteringSetupNonNegotiables = observer((props) => {
                         </View>
                     </Pressable>
 
-                    <TextButton text='Back' style='self-start absolute mt-11' onPress={handleBackButton}/> 
+                    <TextButton text='Back' style='self-start absolute mt-7 md:mt-12' onPress={handleBackButton}/> 
                 </SafeAreaView>
             </Pressable>
         </View>

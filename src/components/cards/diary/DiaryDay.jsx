@@ -18,12 +18,7 @@ const textDateStyleVariants = {
 }
 
 function DiaryDay( {style, isEmpty=false, dateTime, onPress=()=>{}} ) {
-
-    function getDayString(){
-        const differenceInDays = Math.trunc((dateTime - PeriodManager.startTime) / 86400000) + 1;
-    
-        return `Day ${differenceInDays}`;
-    }
+    const differenceInDays = Math.trunc((dateTime - PeriodManager.startTime) / 86400000) + 1;
     
     function getDateString(){
         const date = new Date(dateTime);
@@ -34,7 +29,7 @@ function DiaryDay( {style, isEmpty=false, dateTime, onPress=()=>{}} ) {
     return (
         <View className={style}>
             <Pressable className={viewStyleVariants[isEmpty]} onPress={onPress}>
-                <Text className={textDayStyleVariants[isEmpty]}>{getDayString()}</Text>
+                <Text className={textDayStyleVariants[isEmpty]}>{differenceInDays <= 0 ? 'Past period' : `Day ${differenceInDays}`}</Text>                                        
                 <Text className={textDateStyleVariants[isEmpty]}>{getDateString()}</Text>
             </Pressable>
         </View>

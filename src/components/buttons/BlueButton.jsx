@@ -7,7 +7,7 @@ const styleVariants = {
 
 function BlueButton( {onPress=()=>{}, text='', children, textCompressed=false} ) {    
     return (
-        <View className="absolute left-0 right-0 top-[95%]">            
+        <View className="absolute left-0 right-0 bottom-[7%] md:top-[95%] md:bottom-0">            
             <Pressable onPress={onPress} className="self-center px-3 py-2 rounded-3xl bg-main dark:bg-mainDRK">
                 <View className="w-48 h-0"/>                
                 <Text className={styleVariants[textCompressed]}>{text}{children}</Text>

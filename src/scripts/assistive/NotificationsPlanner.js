@@ -14,7 +14,7 @@ class NotificationsPlanner{
             title = 'Monk Mode app';        
        
         Notifications.scheduleNotificationAsync({
-            content: { title: title, body: body },
+            content: { title: title, body: body, sound: true },
             trigger: { seconds: timerSec }
         }).then(id => {            
             this.focusNotifications.push(id)

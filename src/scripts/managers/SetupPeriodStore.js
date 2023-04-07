@@ -1,7 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import NonNegotiableSuggestions from '../../assets/data/NonNegotiableSuggestions.json';
 import * as FileSystem from 'expo-file-system';
-import DiaryManager from "./DiaryManager";
 import PlanningManager from "./PlanningManager";
 import NonNegotiablesManager from "./NonNegotiablesManager";
 import PeriodManager from "./PeriodManager";
@@ -17,7 +16,7 @@ class SetupPeriodStore {
     preferencesLocal = {
         isValid: false,
         goal: '',
-        endTime: new Date().getTime() + DAY_DURATION*31,
+        endTime: new Date().getTime() + DAY_DURATION*7,
         startTime: new Date().getTime()
     }     
 
@@ -45,7 +44,7 @@ class SetupPeriodStore {
         this.preferencesLocal.endTime = newTime;        
     }
 
-    selectedLengthId = 1;    
+    selectedLengthId = 0;    
     
     isChosen(id){        
         return this.selectedLengthId === id;
@@ -116,10 +115,7 @@ class SetupPeriodStore {
         PeriodManager.setPeriodPreferences(this.preferences);
 
         FileSystem.writeAsStringAsync(FileSystem.documentDirectory+'NonNegotiablesData.json', JSON.stringify(this.nonNegotiables));
-        NonNegotiablesManager.setNonNegotiables(this.nonNegotiables);  
-
-        FileSystem.writeAsStringAsync(FileSystem.documentDirectory+'DiaryData.json', '[]');
-        DiaryManager.setDaysList([]);        
+        NonNegotiablesManager.setNonNegotiables(this.nonNegotiables);    
 
         FileSystem.writeAsStringAsync(FileSystem.documentDirectory+'PlanningData.json', '[]');
         PlanningManager.setTasks([]);

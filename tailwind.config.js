@@ -1,6 +1,6 @@
 module.exports = {
   content: ["./App.jsx", "./src/screens/**.jsx", "./src/screens/**/**.jsx", "./src/components/**/**.jsx", "./src/components/**.jsx"],
-  theme: {    
+  theme: {      
     colors: {
       black: "#000",
       white: "#FFF",
@@ -45,6 +45,12 @@ module.exports = {
       grayTextButtonDRK: "#B5B5B5",
 
       borderDRK: "#484848"
+    },
+    screens: {
+      "sm": { 'raw': '(min-height: 640px)' },
+      "md": { 'raw': '(min-height: 768px)' },
+      "lg": { 'raw': '(min-height: 1024px)' },
+      "xl": { 'raw': '(min-height: 1280px)' },
     }
   },
   plugins: [],

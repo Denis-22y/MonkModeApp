@@ -20,7 +20,7 @@ function EnteringDescription(props) {
     }, []);  
 
     const handleStartButton = () => {
-        navigation.navigate('Entering-Warning');
+        navigation.navigate('Entering-Preparation');
     }
 
     return (
@@ -28,15 +28,15 @@ function EnteringDescription(props) {
             <SafeAreaView className="flex items-center h-full w-[90%] m-auto" style={{paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0}}>            
                 
                 {/* Header text */}
-                <View className="mt-48">
+                <View className="mt-12 sm:mt-24 md:mt-48">
                     <Text className="text-xl font-medium text-center text-headerDescr dark:text-headerDescrDRK">WHAT IS</Text>
                     <Text className="text-5xl font-bold text-center text-headerText dark:text-headerTextDRK">MONK MODE</Text>
                 </View>
 
                 {/* Atteniton block */}
-                <View className="mt-auto mb-14">
-                    <Text className="text-3xl font-semibold text-center text-headerText dark:text-headerTextDRK">You need this</Text>
-                    <Text className="text-center text-xl mt-2.5 text-subText dark:text-subTextDRK">Monk Mode is a period of enhanced focus, discipline, and productivity{'\n'}where you commit yourself to{'\n'}completing a goal. Usually it takes{'\n'}about a month and dedicated to{'\n'}self-improvement.</Text>
+                <View className="mt-auto mb-10 sm:mb-14">
+                    <Text className="text-3xl font-semibold text-center text-headerText dark:text-headerTextDRK">Overview</Text>
+                    <Text className="text-center text-lg md:text-xl mt-2.5 text-subText dark:text-subTextDRK">Monk Mode is a period when you commit yourself to high-level discipline by cutting off all distractions in order to build a business, a side hustle, a strong character, a great physique, mental clarity, or to break your inner limits.</Text>
                 </View>
 
                 {/* Continue button*/}

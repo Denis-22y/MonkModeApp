@@ -9,6 +9,7 @@ import React, { useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import BackButtonHandler from '../scripts/assistive/BackButtonHandler';
 import DiaryManager from '../scripts/managers/DiaryManager';
+import ExpoStatusBar from 'expo-status-bar/build/ExpoStatusBar';
 
 function Diary( {route} ) {    
     const navigation = useNavigation();     
@@ -60,6 +61,7 @@ function Diary( {route} ) {
 
     return (
         <View className="w-full bg-background dark:bg-backgroundEssentialDRK" style={{ minHeight: Math.round(windowHeight)}}>
+            <ExpoStatusBar style='auto' translucent/>
             <Pressable onPress={Keyboard.dismiss} accessible={false}>     
                 <SafeAreaView className="w-[93%] h-full flex content-center mx-auto justify-start" style={{paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight+7 : 0, paddingBottom: Platform.OS === 'android' ? Dimensions.get('screen').height - Dimensions.get('window').height + StatusBar.currentHeight : 0}}>                                                                                
                     {/* Header */}
@@ -74,7 +76,7 @@ function Diary( {route} ) {
                             <DiaryInputField placeholder='Morning' initialValue={DiaryManager.getThemeValue(pageDate, 0)} onCommit={text => DiaryManager.setTheme(pageDate, 0, text)}/>
                             <DiaryInputField placeholder='Evening' initialValue={DiaryManager.getThemeValue(pageDate, 1)} onCommit={text => DiaryManager.setTheme(pageDate, 1, text)}/>                        
                             
-                            <View className="h-32"/>
+                            <View className="h-20 md:h-32"/>
                         </KeyboardAwareScrollView>                             
                     </View>
 

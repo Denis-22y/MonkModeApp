@@ -135,10 +135,11 @@ class FocusManager{
             if(differenceInSeconds <= 0)
                 this.setRemainingTimeString('00:00');
             
-            const minutes = Math.trunc(differenceInSeconds / 60);
-            const seconds = Math.trunc(differenceInSeconds - minutes * 60);
+            const hours = Math.trunc(differenceInSeconds/3600);
+            const minutes = Math.trunc((differenceInSeconds - hours*3600) / 60);
+            const seconds = Math.trunc(differenceInSeconds - (minutes * 60) - (hours * 3600));
             
-            this.setRemainingTimeString(`${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`);
+            this.setRemainingTimeString(`${hours < 10 && hours !== 0 ? '0' : ''}${hours !== 0 ? `${hours}:` : ''}${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`);
     }
 //#endregion
         

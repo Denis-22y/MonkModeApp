@@ -37,7 +37,7 @@ const EnteringSetupGoal = observer((props) => {
                 <SafeAreaView className="flex items-center h-full w-[90%] m-auto" style={{paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0}}>                
                     <KeyboardAvoidingView className="w-full" behavior='position' keyboardVerticalOffset={20}>
                         {/* Header text */}
-                        <View className="mt-48">
+                        <View className="mt-12 sm:mt-24 md:mt-48">
                             <Text className="text-xl font-medium text-center text-headerDescr dark:text-headerDescrDRK">ENTERING</Text>
                             <Text className="text-5xl font-bold text-center text-headerText dark:text-headerTextDRK">MONK MODE</Text>
                         </View>
@@ -53,7 +53,7 @@ const EnteringSetupGoal = observer((props) => {
                     {/* Continue button*/}
                     <WideButton text='Continue' style='w-full mt-auto mb-14' onPress={handleContinueButton}/>
 
-                    <TextButton text='Back' style='self-start absolute mt-11' onPress={handleBackButton}/> 
+                    <TextButton text='Back' style='self-start absolute mt-7 md:mt-12' onPress={handleBackButton}/> 
                 </SafeAreaView>
             </Pressable>
         </View>

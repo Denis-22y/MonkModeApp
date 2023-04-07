@@ -10,6 +10,7 @@ import { observer } from 'mobx-react-lite';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import BackButtonHandler from '../scripts/assistive/BackButtonHandler';
 import NotificationsPlanner from '../scripts/assistive/NotificationsPlanner';
+import ExpoStatusBar from 'expo-status-bar/build/ExpoStatusBar';
 
 const TEXT_DURATION = 400;
 
@@ -121,7 +122,8 @@ const Focus = observer(( {route} ) => {
     }        
 
     return (
-        <View className="w-full bg-background dark:bg-backgroundDRK">        
+        <View className="w-full h-screen bg-background dark:bg-backgroundDRK">   
+            <ExpoStatusBar style='auto' translucent/>
             <SafeAreaView className="w-[93%] h-full flex content-center mx-auto justify-start" style={{paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight+7 : 0, paddingBottom: Platform.OS === 'android' ? Dimensions.get('screen').height - Dimensions.get('window').height + StatusBar.currentHeight : 0}}>                                                                                
                 <View className="h-12"/>
                 {/* Header */}
@@ -138,7 +140,7 @@ const Focus = observer(( {route} ) => {
 
                 <BlueButton text={blueButtonText} onPress={handleBlueButton}/>                                
 
-                <View className="absolute flex flex-row w-full h-12 mt-1 top-12" style={Platform.OS === 'android' ? {top:  StatusBar.currentHeight+7} : {}}>
+                <View className="absolute flex flex-row w-full h-12 mt-1 sm:top-7 md:top-12" style={Platform.OS === 'android' ? {top:  StatusBar.currentHeight+7} : {}}>
                     {/* Back && Finish buttons */
                         FocusManager.stateId === 0 || FocusManager.stateId === 2
                         ? <>

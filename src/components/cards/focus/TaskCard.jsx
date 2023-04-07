@@ -54,16 +54,18 @@ function TaskCard( {style} ) {
     const [opened, setOpened] = useState(false);        
 
     return (
-        <Card style={style}>
-            <Pressable onPress={() => setOpened(!opened)}>
-                <Text className="text-3xl font-semibold text-center text-headerText dark:text-headerTextDRK">Task</Text>
-            </Pressable>
-            <Divider style="mt-1.5"/>   
-            <View className="mt-3">
-                {mainTasksElement()}                                 
-                {otherTasksElement(opened)}                
-            </View>    
-        </Card>
+        <View className={style}>
+            <Card>
+                <Pressable onPress={() => setOpened(!opened)}>
+                    <Text className="text-3xl font-semibold text-center text-headerText dark:text-headerTextDRK">Task</Text>
+                </Pressable>
+                <Divider style="mt-1.5"/>   
+                <View className="mt-3">
+                    {mainTasksElement()}                                 
+                    {otherTasksElement(opened)}                
+                </View>    
+            </Card>
+        </View>
     );
 }
 

@@ -13,7 +13,7 @@ function Warning({ style, text='Warning' }, ref) {
 
     useImperativeHandle(ref, () => ({
         flash() {            
-            progress.value = withSequence(withTiming(1, {duration: 1000}), withDelay(2500, withTiming(0, {duration: 1000})));
+            progress.value = withSequence(withTiming(1, {duration: 800}), withDelay(2500, withTiming(0, {duration: 800})));
         }
     }));
 

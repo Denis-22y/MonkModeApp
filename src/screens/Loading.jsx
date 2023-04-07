@@ -10,6 +10,7 @@ import PeriodManager from '../scripts/managers/PeriodManager';
 import PlanningManager from '../scripts/managers/PlanningManager';
 import DiaryManager from '../scripts/managers/DiaryManager';
 import NonNegotiablesManager from '../scripts/managers/NonNegotiablesManager';
+import ExpoStatusBar from 'expo-status-bar/build/ExpoStatusBar';
 
 function Loading(props) {
     const navigation = useNavigation();   
@@ -99,6 +100,7 @@ function Loading(props) {
     
     return (
         <View className="w-screen h-screen bg-background dark:bg-backgroundDRK">
+            <ExpoStatusBar style='auto' translucent/>
             {
                 showWarning === true
                 ? <>

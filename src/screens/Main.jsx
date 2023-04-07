@@ -12,6 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 import BackButtonHandler from '../scripts/assistive/BackButtonHandler';
 import PeriodManager from '../scripts/managers/PeriodManager';
 import NonNegotiablesManager from '../scripts/managers/NonNegotiablesManager';
+import ExpoStatusBar from 'expo-status-bar/build/ExpoStatusBar';
 
 function Main(props) {    
     const navigation = useNavigation();        
@@ -55,11 +56,12 @@ function Main(props) {
 
     return (
         <View className="w-full h-screen bg-backgroundEssential dark:bg-backgroundEssentialDRK">
+            <ExpoStatusBar style='auto' translucent/>
             <SafeAreaView className="w-[95%] h-full flex content-center mx-auto" style={{paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0}}>                                
             <View style={{overflow: 'hidden', borderTopLeftRadius: 16, borderTopRightRadius: 16, borderBottomLeftRadius: 16, borderBottomRightRadius: 16}}>
                 <ScrollView className="w-full h-screen" showsVerticalScrollIndicator={false}>
                         <HeaderCard style="mt-2"/>
-                        <TaskCard style="mt-6"/>
+                        <TaskCard style="mt-1.5"/>
                         {
                             NonNegotiablesManager.haveNonNegotiables === true
                             ? <NonNegotiablesCard />

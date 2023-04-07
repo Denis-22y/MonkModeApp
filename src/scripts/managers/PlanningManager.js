@@ -124,6 +124,16 @@ class PlanningManager {
             startTime: 0,
             focusDuration: 1500,
             id: new Date().getTime()
+        }        
+
+        resetTempValues(){
+            tempValues = {
+                name: '',
+                details: '',
+                startTime: 0,
+                focusDuration: 1500,
+                id: new Date().getTime()
+            }   
         }
 
         addTask(){            
