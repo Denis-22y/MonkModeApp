@@ -22,7 +22,7 @@ function TaskText( {style='w-full', isBig=false, data={name: '', details: '', st
     }    
 
     return (
-        <Pressable className={style} onPress={handlePress}>
+        <Pressable className={style} onPress={handlePress} accessibilityLabel={`${data.name} ${data.id}`}>
             <Text className={styleVariants[isBig]}>{getName()}</Text>
         </Pressable>
     );

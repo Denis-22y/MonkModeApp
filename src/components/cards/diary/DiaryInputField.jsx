@@ -1,7 +1,13 @@
-import React from 'react';
-import { Platform, TextInput, View, useColorScheme } from 'react-native';
+import React, { useEffect } from 'react';
+import { Keyboard, Platform, TextInput, View, useColorScheme } from 'react-native';
 
 function DiaryInputField({style, placeholder='Write here...', initialValue='', onCommit=()=>{}}) {
+    let text = '';
+
+    useEffect(() => {
+        Keyboard.addListener('keyboardDidHide', () => onCommit(text));
+    }, []);
+
     return (
         <View className={style}>
             <View className="mb-6 bg-inputBackground dark:bg-inputBackgroundDRK rounded-2xl">
@@ -11,8 +17,10 @@ function DiaryInputField({style, placeholder='Write here...', initialValue='', o
                     multiline 
                     textAlignVertical='top' 
                     textAlign='left' 
-                    placeholder={placeholder} placeholderTextColor={useColorScheme() === 'light' ? '#807F85' : '#807F85'} 
-                    defaultValue={initialValue} onEndEditing={e => {onCommit(e.nativeEvent.text)}}/>        
+                    placeholder={placeholder} 
+                    placeholderTextColor={useColorScheme() === 'light' ? '#807F85' : '#807F85'} 
+                    defaultValue={initialValue} 
+                    onChangeText={inputText => text = inputText}/>        
             </View>
         </View>
     );

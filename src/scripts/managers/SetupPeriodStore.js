@@ -76,7 +76,7 @@ class SetupPeriodStore {
         let namesList = [];
         this.nonNegotiables.map(object => namesList.push(object.name));
 
-        if(namesList.indexOf(name) === -1 && this.nonNegotiables.length <= 9 && name !== ''){
+        if(namesList.indexOf(name) === -1 && this.nonNegotiables.length <= 9 && name !== '' && name !== undefined){
             this.nonNegotiables.push({ name: name, dateCompleted: null });
         }        
     }

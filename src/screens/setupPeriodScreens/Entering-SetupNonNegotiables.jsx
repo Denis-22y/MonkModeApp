@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, KeyboardAvoidingView, Keyboard, Pressable, ScrollView, useWindowDimensions, StatusBar } from 'react-native';
+import { View, Text, SafeAreaView, KeyboardAvoidingView, Keyboard, Pressable, ScrollView, useWindowDimensions, StatusBar, Platform } from 'react-native';
 
 import TextButton from '../../components/buttons/TextButton';
 import LargeInput from '../../components/setupPeriodComponents/LargeInput';
@@ -8,10 +8,27 @@ import NonNegotiableSuggestionView from '../../components/setupPeriodComponents/
 import { observer } from "mobx-react-lite";
 import { useNavigation } from '@react-navigation/native';
 import SetupPeriodStore from '../../scripts/managers/SetupPeriodStore';
+import BackButtonHandler from '../../scripts/assistive/BackButtonHandler';
+import { useEffect } from 'react';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const EnteringSetupNonNegotiables = observer((props) => {
     const navigation = useNavigation();
     const windowHeight = useWindowDimensions().height;
+    const insets = useSafeAreaInsets();
+
+    useEffect(() => { //Subscribe on ABB               
+        navigation.addListener('focus', () => {            
+            BackButtonHandler.handleAndroidBackButton(() => { 
+                if(Keyboard.isVisible() === false)
+                    navigation.goBack();
+                else
+                    Keyboard.dismiss();
+            })
+        })
+        
+        navigation.addListener('blur', BackButtonHandler.removeAndroidBackButtonHandler);
+    }, []);  
 
     const handleBackButton = () => {        
         navigation.goBack();
@@ -39,33 +56,35 @@ const EnteringSetupNonNegotiables = observer((props) => {
                         </View>
                         
                         {/* Non-negotiables*/}
-                        <ScrollView className="h-48 sm:h-48 md:h-64 mt-3 rounded-3xl" showsVerticalScrollIndicator={false}>
-                            <View className="flex flex-row flex-wrap w-full h-42 sm:h-68 md:h-80">
-                                {
-                                    SetupPeriodStore.nonNegotiables.map(object => 
-                                        <NonNegotiableView name={object.name} key={object.name}/>
-                                    )
-                                }
+                        <View className="mt-3" style={{overflow: 'hidden', borderTopLeftRadius: 20, borderTopRightRadius: 20, borderBottomLeftRadius: 20, borderBottomRightRadius: 20}}>
+                            <ScrollView className="h-48 md:h-64" showsVerticalScrollIndicator={false}>
+                                <View className="flex flex-row flex-wrap w-full h-42 sm:h-68 md:h-84">
+                                    {
+                                        SetupPeriodStore.nonNegotiables.map(object => 
+                                            <NonNegotiableView name={object.name} key={object.name}/>
+                                        )
+                                    }
 
-                                {
-                                    SetupPeriodStore.getNonNegotiableSuggestion() !== null 
-                                    ? <NonNegotiableSuggestionView />
-                                    : <></>
-                                }          
-                            </View>
-                        </ScrollView>
+                                    {
+                                        SetupPeriodStore.getNonNegotiableSuggestion() !== null 
+                                        ? <NonNegotiableSuggestionView />
+                                        : <></>
+                                    }          
+                                </View>
+                            </ScrollView>
+                        </View>
 
                         <LargeInput style="mt-4 md:mt-10" placeholder='Write it down...' onCommit={text => handleInputCommit(text)} clearOnFocus={true}/>
                     </KeyboardAvoidingView>
                     
                     {/* Continue button*/}
-                    <Pressable className="w-full mt-auto mb-14" onPress={handleContinueButton}>
+                    <Pressable className="w-full mt-auto mb-8 sm:mb-[15%]" style={{paddingBottom: Platform.OS === 'android' ? insets.bottom : 0}} onPress={handleContinueButton}>
                         <View className="h-12 bg-main dark:bg-mainDRK rounded-3xl">
                             <Text className="text-contrastText dark:text-contrastText m-auto text-center font-semibold text-[24px]">Launch</Text>
                         </View>
                     </Pressable>
 
-                    <TextButton text='Back' style='self-start absolute mt-7 md:mt-12' onPress={handleBackButton}/> 
+                    <TextButton text='Back' style='self-start absolute mt-7 sm:mt-10 md:mt-12' onPress={handleBackButton}/> 
                 </SafeAreaView>
             </Pressable>
         </View>

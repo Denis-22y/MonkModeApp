@@ -1,4 +1,4 @@
-import { Alert, Appearance, BackHandler, Platform, StatusBar, View } from 'react-native';
+import { Alert, Appearance, BackHandler, Keyboard, Platform, StatusBar, View } from 'react-native';
 
 import { useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -40,7 +40,7 @@ function Loading(props) {
 
             timeoutId = setTimeout(() => {
                 setShowWarning(true);
-            }, 15000);
+            }, 2000);
 
             FileSystem.readAsStringAsync(FileSystem.documentDirectory + 'PlanningData.json')
                 .then(contentStr => {    
@@ -50,7 +50,7 @@ function Loading(props) {
                         PlanningManager.setTasks(JSON.parse(contentStr));            
                 }, 
                 err => {
-                    console.log(Platform.OS + ' - An error occurated with the PlanningData.json: ' + err);            
+                    //console.log(Platform.OS + ' - An error occurated with the PlanningData.json: ' + err);            
                 })
             .then(
                 FileSystem.readAsStringAsync(FileSystem.documentDirectory + 'NonNegotiablesData.json')
@@ -61,7 +61,7 @@ function Loading(props) {
                         NonNegotiablesManager.setNonNegotiables(JSON.parse(contentStr));                        
                 }, 
                 err => {
-                    console.log(Platform.OS + ' - An error occurated with the NonNegotiablesData.json: ' + err);            
+                    //console.log(Platform.OS + ' - An error occurated with the NonNegotiablesData.json: ' + err);            
                 }))
             .then(
                 FileSystem.readAsStringAsync(FileSystem.documentDirectory + 'DiaryData.json')
@@ -72,7 +72,7 @@ function Loading(props) {
                         DiaryManager.setDaysList(JSON.parse(contentStr));                        
                 }, 
                 err => {
-                    console.log(Platform.OS + ' - An error occurated with the DiaryData.json: ' + err);            
+                    //console.log(Platform.OS + ' - An error occurated with the DiaryData.json: ' + err);            
                 }))
             .then(
                 FileSystem.readAsStringAsync(FileSystem.documentDirectory + 'PeriodPreferences.json')
@@ -89,23 +89,25 @@ function Loading(props) {
                     navigation.navigate('Main');
                 }, 
                 err => {
-                    console.log(Platform.OS + ' - An error occurated with the PeriodPreferences.json: ' + err);
+                    //console.log(Platform.OS + ' - An error occurated with the PeriodPreferences.json: ' + err);
                     navigation.navigate('Entering-Description');
                 }));
 
+                Keyboard.addListener('keyboardDidHide', () => {
+                    Keyboard.dismiss()
+                });    
         });
 
         navigation.addListener('blur', () => {clearTimeout(timeoutId)});
     }, []);
     
     return (
-        <View className="w-screen h-screen bg-background dark:bg-backgroundDRK">
+        <View className="w-screen h-screen bg-background dark:bg-backgroundDRK" accessibilityLabel='Loading'>
             <ExpoStatusBar style='auto' translucent/>
             {
                 showWarning === true
                 ? <>
-                    <Animated.Text className="mt-auto text-xl text-center text-headerText dark:text-headerTextDRK" entering={FadeIn}>It takes a little bit longer than it should.</Animated.Text>
-                    <Animated.Text className="mx-3 mt-2 mb-auto text-lg text-center text-headerDescr dark:text-headerDescrDRK" entering={FadeIn}>Reload the app</Animated.Text>   
+                    <Animated.Text className="my-auto text-xl text-center text-headerText dark:text-headerTextDRK" entering={FadeIn}>Hi there, wait a little bit</Animated.Text>
                 </>
                 : <></>
             }            

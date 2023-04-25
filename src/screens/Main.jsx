@@ -13,6 +13,7 @@ import BackButtonHandler from '../scripts/assistive/BackButtonHandler';
 import PeriodManager from '../scripts/managers/PeriodManager';
 import NonNegotiablesManager from '../scripts/managers/NonNegotiablesManager';
 import ExpoStatusBar from 'expo-status-bar/build/ExpoStatusBar';
+import NotificationsPlanner from '../scripts/assistive/NotificationsPlanner';
 
 function Main(props) {    
     const navigation = useNavigation();        
@@ -41,13 +42,7 @@ function Main(props) {
     }, []);   
 
     useEffect(() => {    
-        Notifications.getPermissionsAsync().then(notificationPermissionsStatus => { // Notifications permisson request
-            if(notificationPermissionsStatus.granted === false){
-                Notifications.requestPermissionsAsync();
-            } else {
-                Notifications.setNotificationHandler({ handleNotification: async () => ({shouldPlaySound: true, shouldShowAlert: true})});
-            }
-        });           
+        NotificationsPlanner.setupNotifications();       
         
         if(new Date().getTime() >= PeriodManager.endTime){
             Alert.alert(`You've finished the period`, 'Do you want to create another Monk Mode period?', [{text: 'No', style: 'cancel'}, {text: 'Create', onPress: () => navigation.navigate('Entering-Description')}]); 
@@ -55,7 +50,7 @@ function Main(props) {
     }, [])        
 
     return (
-        <View className="w-full h-screen bg-backgroundEssential dark:bg-backgroundEssentialDRK">
+        <View className="w-full h-full bg-backgroundEssential dark:bg-backgroundEssentialDRK">
             <ExpoStatusBar style='auto' translucent/>
             <SafeAreaView className="w-[95%] h-full flex content-center mx-auto" style={{paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0}}>                                
             <View style={{overflow: 'hidden', borderTopLeftRadius: 16, borderTopRightRadius: 16, borderBottomLeftRadius: 16, borderBottomRightRadius: 16}}>
@@ -78,8 +73,3 @@ function Main(props) {
 }
 
 export default Main;
-
-/* 
-TODO:
-    1. Status bar color theme (include research)
-*/

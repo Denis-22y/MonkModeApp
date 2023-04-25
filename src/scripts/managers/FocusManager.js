@@ -1,6 +1,7 @@
 import { makeAutoObservable } from "mobx";
 import NotificationsPlanner from "../assistive/NotificationsPlanner";
 import { StatusBar } from "react-native";
+import { DarkTheme, ThemeProvider, useTheme } from "@react-navigation/native";
 
 class FocusManager{
     constructor() {
@@ -66,8 +67,8 @@ class FocusManager{
 
     startFocus(){
         this.setState(1);
-        NotificationsPlanner.setupStateNotification(this.taskTitle, 'Relax mode has started', this.focusDuration, true, false);
-        NotificationsPlanner.setupStateNotification(this.taskTitle, 'Relax mode is over. Open the app to continue', this.focusDuration+this.relaxDuration, true, false);        
+        NotificationsPlanner.planStateNotification(this.taskTitle, 'Relax mode has started', this.focusDuration, true, false);
+        NotificationsPlanner.planStateNotification(this.taskTitle, 'Relax mode is over. Open the app to continue', this.focusDuration+this.relaxDuration, true, false);        
         this.updateRemainingTimeString();
     }
 
@@ -78,7 +79,7 @@ class FocusManager{
         if(this.stateId === 1 && this.state.endTime < currentTime) { // Adjusting the endTime if the focus ended in the background
             relaxEndTime = relaxEndTime - Math.abs(this.state.endTime - currentTime);
         } else {
-            NotificationsPlanner.setupStateNotification(this.taskTitle, 'Relax mode is over. Open the app to continue', this.relaxDuration, true, true);
+            NotificationsPlanner.planStateNotification(this.taskTitle, 'Relax mode is over. Open the app to continue', this.relaxDuration, true, true);
         }
 
         if(relaxEndTime > 0){
@@ -111,7 +112,7 @@ class FocusManager{
     updateState(){
         switch(this.stateId){
             case 1:                
-                StatusBar.setHidden(true, 'slide');
+                StatusBar.setHidden(true, 'fade');                
 
                 if(this.state.endTime <= new Date().getTime()) {
                     this.startRelax();                
@@ -119,7 +120,7 @@ class FocusManager{
             
                 break;
             case 2:
-                StatusBar.setHidden(false, 'slide');
+                StatusBar.setHidden(false, 'fade');
 
                 if(this.state.endTime <= new Date().getTime()) {
                     this.startStay();                

@@ -28,7 +28,7 @@ function EnteringDescription(props) {
             <SafeAreaView className="flex items-center h-full w-[90%] m-auto" style={{paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0}}>            
                 
                 {/* Header text */}
-                <View className="mt-12 sm:mt-24 md:mt-48">
+                <View className="mt-12 sm:mt-24 md:mt-32">
                     <Text className="text-xl font-medium text-center text-headerDescr dark:text-headerDescrDRK">WHAT IS</Text>
                     <Text className="text-5xl font-bold text-center text-headerText dark:text-headerTextDRK">MONK MODE</Text>
                 </View>
@@ -40,7 +40,7 @@ function EnteringDescription(props) {
                 </View>
 
                 {/* Continue button*/}
-                <WideButton text='Start' style='mb-14 w-full' onPress={handleStartButton}/>
+                <WideButton text='Start' onPress={handleStartButton}/>
 
             </SafeAreaView>
         </View>

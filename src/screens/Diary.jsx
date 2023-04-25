@@ -24,7 +24,10 @@ function Diary( {route} ) {
     useEffect(() => { //Subscribe on ABB               
         navigation.addListener('focus', () => {            
             BackButtonHandler.handleAndroidBackButton(() => { 
-                navigation.goBack();
+                if(Keyboard.isVisible() === false)
+                    navigation.goBack();
+                else
+                    Keyboard.dismiss();
             })
         })
         

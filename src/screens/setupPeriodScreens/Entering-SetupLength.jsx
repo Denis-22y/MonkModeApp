@@ -23,13 +23,13 @@ const EnteringSetupLength = observer((props) => {
         <View className="bg-background dark:bg-backgroundDRK">
             <SafeAreaView className="flex items-center h-full w-[90%] m-auto" style={{paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0}}>
                 {/* Header text */}
-                <View className="mt-12 sm:mt-24 md:mt-48">
+                <View className="mt-12 sm:mt-24 md:mt-32">
                     <Text className="text-xl font-medium text-center text-headerDescr dark:text-headerDescrDRK">ENTERING</Text>
                     <Text className="text-5xl font-bold text-center text-headerText dark:text-headerTextDRK">MONK MODE</Text>
                 </View>
 
                 {/* Atteniton block */}
-                <View className="w-full mt-32">
+                <View className="w-full mt-32 md:mt-48">
                     <Text className="text-3xl font-semibold text-center text-headerText dark:text-headerTextDRK">How long?</Text>
                     <View className="flex flex-row justify-between w-full mt-8">
                         <BigToggleButton text='week' chosen={SetupPeriodStore.isChosen(0)} onPress={() => {SetupPeriodStore.setDate(0)}}/>
@@ -39,9 +39,11 @@ const EnteringSetupLength = observer((props) => {
                 </View>
 
                 {/* Continue button*/}
-                <WideButton text='Continue' style='w-full mt-auto mb-14' onPress={handleContinueButton}/>
+                <View className="mt-auto w-full"> 
+                        <WideButton text='Continue' onPress={handleContinueButton}/>
+                    </View>
 
-                <TextButton text='Back' style='self-start absolute mt-7 md:mt-12' onPress={handleBackButton}/>                
+                <TextButton text='Back' style='self-start absolute mt-7 sm:mt-10 md:mt-12' onPress={handleBackButton}/>                
             </SafeAreaView>
         </View>
     );

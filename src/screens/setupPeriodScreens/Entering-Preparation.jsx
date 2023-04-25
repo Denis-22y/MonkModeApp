@@ -23,7 +23,7 @@ function EnteringPreparation(props) {
             <ExpoStatusBar style='auto' translucent/>
             <SafeAreaView className="flex items-center h-full w-[90%] m-auto" style={{paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0}}>
                 {/* Header text */}
-                <View className="mt-12 sm:mt-24 md:mt-48">
+                <View className="mt-12 sm:mt-24 md:mt-32">
                     <Text className="text-xl font-medium text-center text-headerDescr dark:text-headerDescrDRK">GUIDE</Text>
                     <Text className="text-5xl font-bold text-center text-headerText dark:text-headerTextDRK">MONK MODE</Text>
                 </View>
@@ -42,9 +42,9 @@ function EnteringPreparation(props) {
                 </View>
 
                 {/* Continue button*/}
-                <WideButton text='Continue' style='w-full mb-14' onPress={handleContinueButton}/>
+                <WideButton text='Continue' onPress={handleContinueButton}/>
 
-                <TextButton text='Back' style='self-start absolute mt-8 md:mt-12' onPress={handleBackButton}/>                
+                <TextButton text='Back' style='self-start absolute mt-7 sm:mt-10 md:mt-12' onPress={handleBackButton}/>                
             </SafeAreaView>
         </View>
     );

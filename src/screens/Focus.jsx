@@ -1,4 +1,4 @@
-import { View, Text, SafeAreaView, Platform, StatusBar, Dimensions, Pressable } from 'react-native';
+import { View, Text, SafeAreaView, Platform, StatusBar, Pressable } from 'react-native';
 
 import BlueButton from '../components/buttons/BlueButton';
 
@@ -9,19 +9,20 @@ import PlanningManager from '../scripts/managers/PlanningManager';
 import { observer } from 'mobx-react-lite';
 import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import BackButtonHandler from '../scripts/assistive/BackButtonHandler';
-import NotificationsPlanner from '../scripts/assistive/NotificationsPlanner';
 import ExpoStatusBar from 'expo-status-bar/build/ExpoStatusBar';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const TEXT_DURATION = 400;
 
 const Focus = observer(( {route} ) => {    
     const navigation = useNavigation();    
     const [blueButtonText, setBlueButtonText] = useState();   
-    const [subText, setSubText] = useState();       
-    
+    const [subText, setSubText] = useState();    
+    const insets = useSafeAreaInsets();
+
     const taskData = route.params;    
 
-    useEffect(() => { // First render                        
+    useEffect(() => { // First render                            
         FocusManager.startup(taskData.name, taskData.focusDuration);     
         
         navigation.addListener('beforeRemove', () => { // Subcription on removing the screen                        
@@ -122,9 +123,10 @@ const Focus = observer(( {route} ) => {
     }        
 
     return (
-        <View className="w-full h-screen bg-background dark:bg-backgroundDRK">   
+        <View className="w-full h-full bg-background dark:bg-backgroundDRK">   
             <ExpoStatusBar style='auto' translucent/>
-            <SafeAreaView className="w-[93%] h-full flex content-center mx-auto justify-start" style={{paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight+7 : 0, paddingBottom: Platform.OS === 'android' ? Dimensions.get('screen').height - Dimensions.get('window').height + StatusBar.currentHeight : 0}}>                                                                                
+            
+            <SafeAreaView className="w-[93%] h-full flex content-center mx-auto justify-start" style={{paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 0}}>                                                                                
                 <View className="h-12"/>
                 {/* Header */}
                 <View className="mt-2">
@@ -138,9 +140,7 @@ const Focus = observer(( {route} ) => {
                     <Text className="text-base text-center text-headerDescr dark:text-headerDescrDRK">{subText}</Text>                    
                 </View>
 
-                <BlueButton text={blueButtonText} onPress={handleBlueButton}/>                                
-
-                <View className="absolute flex flex-row w-full h-12 mt-1 sm:top-7 md:top-12" style={Platform.OS === 'android' ? {top:  StatusBar.currentHeight+7} : {}}>
+                <View className="absolute flex flex-row w-full mt-1 sm:mt-2 md:mt-0" style={{paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : insets.top}}>
                     {/* Back && Finish buttons */
                         FocusManager.stateId === 0 || FocusManager.stateId === 2
                         ? <>
@@ -157,8 +157,9 @@ const Focus = observer(( {route} ) => {
                         </> : <></>
                     }   
                 </View>
-
             </SafeAreaView>
+
+            <BlueButton text={blueButtonText} onPress={handleBlueButton}/>    
         </View>
     );
 })

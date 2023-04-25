@@ -14,17 +14,18 @@
     ],
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.denis23y.monkmodeapp"
+      "bundleIdentifier": "com.iyls.monkmodeapp"
     },
     "android": {
-      "package": "com.denis23y.monkmodeapp"
+      "package": "com.iyls.monkmodeapp",
+      "versionCode": 4
     },
     "web": {},
     "extra": {
       "eas": {
-        "projectId": "8afac92e-7e6f-4284-964b-49be2f7689a6"
+        "projectId": "f731d19f-b9d6-4afa-98b1-37d206ff46e3"
       }
     },
-    "owner": "denis-23y"
+    "owner": "iyl-studio"
   }
 }

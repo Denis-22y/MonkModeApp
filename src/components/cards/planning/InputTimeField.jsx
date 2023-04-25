@@ -33,7 +33,7 @@ const InputTimeField = observer(({ style, onCommit = () => {} }) => {
     }
 
     return (
-        <Pressable className={style} onPress={() => setIsPickerVisible(!isPickerVisible)}>
+        <Pressable className={style} hitSlop={10} onPress={() => setIsPickerVisible(!isPickerVisible)}>
             <DateTimePicker isVisible={isPickerVisible} mode='time' onConfirm={handleTimePicker} date={date} onCancel={() => {setIsPickerVisible(false)}}/>
             <View className="bg-inputBackground dark:bg-inputBackgroundDRK rounded-3xl px-3.5 h-10">
                 <Text className="text-grayText text-center my-auto" style={{ fontSize: 20 }}>{text}</Text>
